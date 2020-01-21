@@ -3,6 +3,7 @@ package ru.avalon.java.udp;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
 
 /**
  * Упражнение, на правленное на выработку умений, связанных с полученеим
@@ -10,10 +11,30 @@ import java.net.DatagramSocket;
  *
  * @author Daniel Alpatov
  */
+/*
+import java.net.*;
+import java.io.*;
+
+public class Receiver {
+
+    public static void main(String[] args) throws SocketException,
+                                                  IOException {
+        byte[] buffer = new byte[MAX_MESSAGE_SIZE];
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
+        DatagramSocket socket = new DatagramSocket(8080);
+        socket.receive(packet);
+
+        String message = new String(buffer, "UTF-8");
+        System.out.println(message);
+    }
+}
+*/
 public final class UdpReceiver {
+    final static int MAX_MESSAGE_SIZE = 1024;
 
     public static void main(String[] args) throws IOException {
-        // 1. Формиоуем буффер, для хранения получаемых данных.
+        // 1. Формируем буффер, для хранения получаемых данных.
         final byte[] buffer = prepareBuffer();
         // 2. Формируем пакет, на основе созданного буфера.
         final DatagramPacket packet = preparePacket(buffer);
@@ -26,6 +47,7 @@ public final class UdpReceiver {
         // 6. На основании данных пакета формируем текстовое сообщение.
         final String message = getMessage(packet);
         // 7. Освобождаем ресурсы.
+        System.out.println(message);
         socket.close();
     }
 
@@ -38,7 +60,8 @@ public final class UdpReceiver {
         /*
          * TODO Реализовать метод prepareBuffer класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        byte[] buffer = new byte[MAX_MESSAGE_SIZE];
+        return buffer;
     }
 
     /**
@@ -54,7 +77,8 @@ public final class UdpReceiver {
         /*
          * TODO Реализовать метод preparePacket класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+        return packet;
     }
 
     /**
@@ -64,11 +88,12 @@ public final class UdpReceiver {
      *
      * @return сокет.
      */
-    private static DatagramSocket prepareSocket(int port) {
+    private static DatagramSocket prepareSocket(int port) throws SocketException {
         /*
          * TODO Реализовать метод prepareSocket класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        DatagramSocket socket = new DatagramSocket(11000);
+        return socket;
     }
 
     /**
@@ -83,7 +108,8 @@ public final class UdpReceiver {
         /*
          * TODO Реализовать метод getMessage класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        String message = new String(packet.getData());
+        return message;
     }
 
 }
